@@ -1,6 +1,7 @@
 import React, { Component, useState, useEffect } from 'react'
 import Button from 'react-bootstrap/Button'
 import Collapse from 'react-bootstrap/Collapse'
+import { withRouter } from 'react-router-dom';
 import CartItem from './cartitem'
 
 
@@ -63,7 +64,7 @@ function Cart(props) {
             </div>
 
             <Collapse in={open}>
-            <div id="cart" style={{ boxShadow: ' -3px 5px 10px 5px #888888'}}>
+            <div id="cart" style={{background:'white', boxShadow: ' -3px 5px 10px 5px #888888'}}>
                     {cartComponents}
                     <div style={{display:count>0?'block':'none', fontWeight: 'bold', fontSize: '20px', textAlign: 'center', background: '#F5AF02', width: 'inherit' }}>{sum}</div>
                     </div>
