@@ -1,0 +1,32 @@
+svg{
+    fill-opacity: 70%;
+}
+svg :hover {
+   
+    cursor: pointer;
+    fill-opacity: 100%;
+
+}
+.li{
+    list-style-position:inside;
+    padding: 5px;
+    border-bottom: solid 1px rgb(141, 138, 138);
+    display: list-item;
+
+    
+
+}
+.li:hover{
+  color:#F5AF02;
+  font-weight:bold;
+    
+}
+
+.text{
+    display: block;/* or inline-block */
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+    overflow: hidden;
+    max-height: 3.6em;
+    line-height: 1.8em;
+}
