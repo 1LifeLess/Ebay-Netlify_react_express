@@ -25,7 +25,7 @@ function Search(props) {
         <nav class="navbar navbar-light bg-light">
             <form class="form-inline" onSubmit={handleChange}>
                 <input id="searchBox"  onChange={()=> document.getElementById("searchBox").style.border = ''} onKeyPress={(e)=>e.key === 13?handleChange:null} class="form-control mr-sm-2" type="search"  placeholder="Search"  aria-label="Search" ref={userInput} />
-                <button class="btn btn-outline-success my-2 my-sm-0 " disabled={props.authError} type="submit" >Search</button>
+                <button class="btn btn-outline-success my-2 my-sm-0 " disabled={props.authError} type="submit" >Search test</button>
             </form>
         </nav>
     </div>
