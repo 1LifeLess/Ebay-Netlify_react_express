@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/static/css/main.1e91eac5.chunk.css",
+    "main.js": "/static/js/main.bf440692.chunk.js",
+    "main.js.map": "/static/js/main.bf440692.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.a0e0afc4.js",
+    "runtime-main.js.map": "/static/js/runtime-main.a0e0afc4.js.map",
+    "static/css/2.c72968ad.chunk.css": "/static/css/2.c72968ad.chunk.css",
+    "static/js/2.355f1867.chunk.js": "/static/js/2.355f1867.chunk.js",
+    "static/js/2.355f1867.chunk.js.map": "/static/js/2.355f1867.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.961246f4c7359809690ddee45188dce7.js": "/precache-manifest.961246f4c7359809690ddee45188dce7.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/2.c72968ad.chunk.css.map": "/static/css/2.c72968ad.chunk.css.map",
+    "static/css/main.1e91eac5.chunk.css.map": "/static/css/main.1e91eac5.chunk.css.map",
+    "static/js/2.355f1867.chunk.js.LICENSE.txt": "/static/js/2.355f1867.chunk.js.LICENSE.txt",
+    "static/media/ebay.jpg": "/static/media/ebay.38123ae2.jpg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.a0e0afc4.js",
+    "static/css/2.c72968ad.chunk.css",
+    "static/js/2.355f1867.chunk.js",
+    "static/css/main.1e91eac5.chunk.css",
+    "static/js/main.bf440692.chunk.js"
+  ]
+}
