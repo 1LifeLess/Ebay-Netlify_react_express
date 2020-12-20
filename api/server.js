@@ -15,7 +15,6 @@ app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-
   next()
 });
 
@@ -41,9 +40,9 @@ router.post('/getToken', (req, res) => {
     console.log('process.env.TOKEN_OBJ = ', process.env.TOKEN_OBJ)
     let obj = JSON.parse(process.env.TOKEN_OBJ)
     if(obj.hasOwnProperty('error')) {
-      //console.log("JSON.parse(process.env.TOKEN_OBJ).hasOwnProperty('error')",JSON.parse(process.env.TOKEN_OBJ).hasOwnProperty('error'))
-      return res.sendStatus(401)
-    }
+      console.log("JSON.parse(process.env.TOKEN_OBJ).hasOwnProperty('error')",JSON.parse(process.env.TOKEN_OBJ).hasOwnProperty('error'))
+     return res.sendStatus(401)
+   }
     res.sendStatus(200)
   }).catch((error) => {
     console.error('ERROR Get Token = ', error)
@@ -65,13 +64,11 @@ router.get('/TestgetKey', (req, res) => {
 });
 
 router.get('/fetchItems/searchTxt/:searchTxt', (req, res, next) => {
- // res.send(json) //for dev environment
+res.send(json) //for dev environment
   //-------------------------------------------------------------------------------------------------------------------------------------
-  //console.clear()
-  console.log('req = https://api.sandbox.ebay.com/buy/browse/v1/item_summary/search?q=' + req.params.searchTxt + '&limit=100')
+   console.log('req = https://api.sandbox.ebay.com/buy/browse/v1/item_summary/search?q=' + req.params.searchTxt + '&limit=100')
   //console.log('fetch Items process.env.TOKEN_OBJ = ' , process.env.TOKEN_OBJ)
   //console.log('fetch Items process.env.TOKEN_OBJ.access_token = ' , JSON.parse(process.env.TOKEN_OBJ).access_token)
-
   fetch('https://api.sandbox.ebay.com/buy/browse/v1/item_summary/search?q=' + req.params.searchTxt + '&limit=100', {
     headers: {
       'Authorization': 'Bearer ' + JSON.parse(process.env.TOKEN_OBJ).access_token,
@@ -89,16 +86,9 @@ router.get('/fetchItems/searchTxt/:searchTxt', (req, res, next) => {
     console.log("response data after token data.total = ", data.total)
     if (data.total == 0) {
       console.log("data.total==0", data.total == 0)
-      //  res.send({
-      //     body: {},
-      //     statusCode: 401,
-      //     statusMessage:"no result, please search for something else"
-      //   })
       res.statusMessage = 'no result, please search for something else'
       res.status(401).end()
-      //res.send(res)
-      // console.log("Server RES: ",res)
-      return //res
+      return 
     }
     // console.log("I get to server Filter, data = ",data)
     const fData = data.itemSummaries.filter(item => item.image && item.image.imageUrl)

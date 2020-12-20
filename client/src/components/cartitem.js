@@ -22,7 +22,7 @@ function CartItem(props) {
     
     return (
        
-            <div className="li">
+            <div className="li" style={{ userSelect: 'none'}}>
             <img style={image} src={props.item.image.imageUrl} />
          
                 
