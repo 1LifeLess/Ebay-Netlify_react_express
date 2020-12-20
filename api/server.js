@@ -62,7 +62,7 @@ router.get('/TestgetKey', (req, res) => {
 });
 
 router.get('/fetchItems/searchTxt/:searchTxt', (req, res, next) => {
-res.send(json) //for dev environment
+//res.send(json) //for dev environment
   //-------------------------------------------------------------------------------------------------------------------------------------
    console.log('req = https://api.sandbox.ebay.com/buy/browse/v1/item_summary/search?q=' + req.params.searchTxt + '&limit=100')
   //console.log('fetch Items process.env.TOKEN_OBJ = ' , process.env.TOKEN_OBJ)
