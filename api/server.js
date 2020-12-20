@@ -3,7 +3,7 @@ const express = require('express');
 const path = require('path');
 const fetch = require('node-fetch').default;
 require('dotenv').config();
-//const json = require('./data.json')
+const json = require('./data.json')
 //const noResult = require('./noResult.json')
 const serverless = require('serverless-http');
 const app = express();
@@ -65,7 +65,7 @@ router.get('/TestgetKey', (req, res) => {
 });
 
 router.get('/fetchItems/searchTxt/:searchTxt', (req, res, next) => {
-  //res.send(json)
+ // res.send(json) //for dev environment
   //-------------------------------------------------------------------------------------------------------------------------------------
   //console.clear()
   console.log('req = https://api.sandbox.ebay.com/buy/browse/v1/item_summary/search?q=' + req.params.searchTxt + '&limit=100')
