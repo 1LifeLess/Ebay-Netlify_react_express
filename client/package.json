@@ -4,8 +4,8 @@
   "license": "MIT",
   "proxy": "http://localhost:9000",
   "author": {
-    "name": "Esau Silva (@_esausilva)",
-    "url": "https://esausilva.com"
+    "name": "Tomer",
+    "url": "https://github.com/1LifeLess"
   },
   "scripts": {
     "start": "react-scripts start",
