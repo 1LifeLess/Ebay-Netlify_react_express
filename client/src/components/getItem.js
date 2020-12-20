@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import './style.css'
 //import Button from 'react-bootstrap/Button'
 
@@ -31,7 +31,7 @@ function cartEvent(){
   <div style={{display: 'inline-block',  padding: '25px', textAlign:'center', border: '0.2px solid #e5e5e5'}}>
     {/* <h1>{props.title} </h1><br /> */}
     <div style={shadow}></div>
-   <img style={image} src={props.item.image.imageUrl} /> <br />
+   <img alt="item" style={image} src={props.item.image.imageUrl} /> <br />
    <div title={props.item.title} className="text" style={{width:'227px'}}>{props.item.title}</div>
    <span style={{fontWeight:'bold',lineHeight:'30px'}}>Price: {props.item.price.value}</span><br />
     <button onClick={cartEvent} className="btn btn-warning">Add to cart  </button> 

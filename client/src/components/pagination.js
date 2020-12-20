@@ -11,7 +11,7 @@ console.log("pagination rendered")
     <nav style={{display:'inline-block'}}>
       <ul className='pagination'>
         {pageNumbers.map(number => (
-          <li key={number} style={{cursor:'pointer'}} className={props.currentPage==number?'page-item active':'page-item'}>
+          <li key={number} style={{cursor:'pointer'}} className={props.currentPage===number?'page-item active':'page-item'}>
             <div onClick={() => props.changeCurrentPage(number)}  className='page-link'>
               {number}
             </div>

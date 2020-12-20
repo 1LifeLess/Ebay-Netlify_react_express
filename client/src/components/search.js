@@ -1,4 +1,4 @@
-import React, { Component,useState } from 'react'
+import React from 'react'
 import img from '../files/ebay.jpg'
 
 function Search(props) {
@@ -21,7 +21,7 @@ function Search(props) {
       // onKeyPress={handleKeypress}
     }
     return <div>
-        <img style={{height:'100px'}} src={img}/>
+        <img alt="ebay logo" style={{height:'100px'}} src={img}/>
         <nav class="navbar navbar-light bg-light">
             <form class="form-inline" onSubmit={handleChange}>
                 <input id="searchBox"  onChange={()=> document.getElementById("searchBox").style.border = ''} onKeyPress={(e)=>e.key === 13?handleChange:null} class="form-control mr-sm-2" type="search"  placeholder="Search"  aria-label="Search" ref={userInput} />

@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
-import Button from 'react-bootstrap/Button'
+import React from 'react'
+//import Button from 'react-bootstrap/Button'
 import './style.css'
 
 function CartItem(props) {
@@ -23,7 +23,7 @@ function CartItem(props) {
     return (
        
             <div className="li" style={{ userSelect: 'none'}}>
-            <img style={image} src={props.item.image.imageUrl} />
+            <img alt="item" style={image} src={props.item.image.imageUrl} />
          
                 
             

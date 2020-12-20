@@ -1,7 +1,7 @@
-import React, { Component, useState, useEffect } from 'react'
-import Button from 'react-bootstrap/Button'
+import React, { useState, useEffect } from 'react'
+//import Button from 'react-bootstrap/Button'
 import Collapse from 'react-bootstrap/Collapse'
-import { withRouter } from 'react-router-dom';
+//import { withRouter } from 'react-router-dom';
 import CartItem from './cartitem'
 
 

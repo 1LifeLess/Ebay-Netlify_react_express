@@ -1,10 +1,10 @@
-import React, { useState,useEffect  } from 'react';
+import  {useEffect  } from 'react';
 import queryString from 'query-string'
-import { Redirect } from 'react-router';
+//import { Redirect } from 'react-router';
 
 function GetKey(props) {
   // Declare a new state variable, which we'll call "count"
-  const [tokenRes, setTokenRes] = useState('');
+  //const [tokenRes, setTokenRes] = useState('');
   useEffect(() => {
     //props.onTokenUpdate(JSON.stringify('{key : data}'))
     // console.log("queryString.parse(props.location.search).code = ", queryString.parse(props.location.search).code)

@@ -18,7 +18,6 @@ app.use((req, res, next) => {
   next()
 });
 
-
 router.post('/getToken', (req, res) => {
   console.log("Server req.body.code ", req.body.code)
   fetch("https://api.sandbox.ebay.com/identity/v1/oauth2/token", {
@@ -49,7 +48,6 @@ router.post('/getToken', (req, res) => {
     // res.status(400).send('somethign went wrong in Auth process');
   })
 })
-
 
 
 router.get('/TestgetKey', (req, res) => {
