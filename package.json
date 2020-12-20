@@ -9,10 +9,10 @@
   "scripts": {
     "start": "run-p start:**",
     "start:lambda": "netlify-lambda serve api",
-    "start:app": "cd client && npm start",
+    "start:app": "cd client && yarn start",
     "build": "run-p build:**",
     "build:lambda": "netlify-lambda build api",
-    "build:app": "cd client && npm run build",
+    "build:app": "cd client && yarn build",
     "deploy:draft": "netlify deploy --dir=client/build --functions=functions",
     "deploy:prod": "netlify deploy --dir=client/build --functions=functions --prod"
   },
