@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react'
 import Collapse from 'react-bootstrap/Collapse'
 //import { withRouter } from 'react-router-dom';
 import CartItem from './cartitem'
+import './cart.css'
 
 
 
@@ -54,7 +55,7 @@ function Cart(props) {
 //style={{ boxShadow: ' -3px 5px 10px 5px #888888', display: 'inline-block' }}
     return (
         <div>
-            <div onClick={chnageCollapse} style={{ userSelect: 'none', cursor: 'pointer', textAlign: 'right' }}   aria-expanded={open} aria-controls="cart">
+            <div onClick={chnageCollapse} style={{ userSelect: 'none', cursor: 'pointer', textAlign: 'right' }}    ariaControls="cart">
                 <svg style={style} viewBox="0 0 16 16" class="bi bi-cart3" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                     <path fill-rule="discrete" d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm7 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
                 </svg>
@@ -64,9 +65,13 @@ function Cart(props) {
             </div>
 
             <Collapse in={open}>
-            <div id="cart" style={{backgroundColor:'white', boxShadow: ' -3px 5px 10px 5px #888888'}}>
+            <div id="cart" >
                     {cartComponents}
-                    <div style={{display:count>0?'block':'none', fontWeight: 'bold', fontSize: '20px', textAlign: 'center', background: '#F5AF02', width: 'inherit' }}>{sum}</div>
+                    <div style={{display:count>0?'block':'none', fontWeight: 'bold', fontSize: '20px', textAlign: 'center', background: '#F5AF02', width: 'inherit' }}>{sum}
+                    <div className="trash" onClick={()=>props.emptyCart()}>
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-trash-fill" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z"/>
+      </svg></div></div>
                     </div>
                    
             </Collapse>

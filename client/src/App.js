@@ -116,11 +116,11 @@ class App extends Component {
   }
 
   cartAddRemoveItem = (item, num) => {
-    //  console.log("cartAddRemoveItem", item, num)
+      console.log("cartAddRemoveItem", item, num)
     //let items = [...this.state.items]
     // items[item.key].inCart = items[item.key].inCart + num //increase/decrease inCart property of the item
     //items[item.key].index = this.state.cartItems.length //giving the item index so it can be deleted by complexity of O1 , index isn't wrong - see next line
-    let cartItems = [...this.state.cartItems]
+    let cartItems = [...this.state.cartItems] //prefer shallow copy 
     const found = this.state.cartItems.findIndex(x => x.itemId == item.itemId) //searching input item in cart by item id
     if (found == -1) {
       item.inCart++
@@ -187,6 +187,11 @@ class App extends Component {
     //let history = useHistory();
     this.props.history.push('http://localhost:3000/')
   };
+
+  emptyCart=()=>{
+  const cartItems = this.state.cartItems.map(item=>item.inCart=0) //because we preferred shallow copy
+    this.setState({cartItems:[]})
+  }
   render() {
     console.log("APP rendered STATE= ", this.state)
     //console.log("APP - render :this.state.searchTxt = ", this.state.searchTxt)
@@ -214,7 +219,7 @@ class App extends Component {
 
           <Search text={this.state.searchTxt} changeText={this.changeText} authError={this.state.authError}/>
           <div style={{ right: '2%', position: 'fixed' }}>
-            <Cart items={this.state.cartItems} cartAddRemoveItem={this.cartAddRemoveItem} />
+            <Cart items={this.state.cartItems} cartAddRemoveItem={this.cartAddRemoveItem} emptyCart={this.emptyCart} />
           </div>
           <div style={{ display: 'inline-block' }}>
             <Sort changeSortOrder={this.changeSortOrder} />

@@ -40,7 +40,7 @@ router.post('/getToken', (req, res) => {
     let obj = JSON.parse(process.env.TOKEN_OBJ)
     if(obj.hasOwnProperty('error')) {
       console.log("JSON.parse(process.env.TOKEN_OBJ).hasOwnProperty('error')",JSON.parse(process.env.TOKEN_OBJ).hasOwnProperty('error'))
-     return res.sendStatus(401)
+      return res.sendStatus(401)  //Need to comment out for prod
    }
     res.sendStatus(200)
   }).catch((error) => {
