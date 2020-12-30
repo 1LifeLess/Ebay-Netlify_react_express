@@ -20,16 +20,19 @@ app.use((req, res, next) => {
 
 router.post('/getToken', (req, res) => {
   console.log("Server req.body.code ", req.body.code)
-  fetch("https://api.sandbox.ebay.com/identity/v1/oauth2/token", {
+  //https://api.ebay.com/identity/v1/oauth2/token prod
+  //https://api.sandbox.ebay.com/identity/v1/oauth2/token sabdbox
+  fetch("https://api.ebay.com/identity/v1/oauth2/token", {
     headers: {
-      'Authorization': 'Basic dG9tZXJzaGEtc3RvcmUtU0JYLThlNjRlOWYyMi0wYzgyZWQwYjpTQlgtZTY0ZTlmMjIyNzQ4LTdmODMtNGZjMi05MTA5LThkN2I=',//tomersha-store-SBX-8e64e9f22-0c82ed0b:SBX-e64e9f222748-7f83-4fc2-9109-8d7b',
+  //  /*sandbox*/ 'Authorization': 'Basic dG9tZXJzaGEtc3RvcmUtU0JYLThlNjRlOWYyMi0wYzgyZWQwYjpTQlgtZTY0ZTlmMjIyNzQ4LTdmODMtNGZjMi05MTA5LThkN2I=',//tomersha-store-SBX-8e64e9f22-0c82ed0b:SBX-e64e9f222748-7f83-4fc2-9109-8d7b',
+    /*prod*/  'Authorization': 'Basic dG9tZXJzaGEtc3RvcmUtUFJELTI3MzYwNWNlOS1iYThlZjQ4NjpQUkQtNzM2MDVjZTk4ZDM0LWE3MmItNDMxNS04ZTc3LTczOGQ=', // tomersha-store-PRD-273605ce9-ba8ef486:PRD-73605ce98d34-a72b-4315-8e77-738d
       'Content-Type': 'application/x-www-form-urlencoded'
     },
     method: "POST",
     body:
       'grant_type=authorization_code&' +
       'code=' + req.body.code +
-      '&redirect_uri=tomer_shani-tomersha-store--trsqvdhhl'
+      '&redirect_uri=tomer_shani-tomersha-store--efihmyvu' //tomer_shani-tomersha-store--trsqvdhhl
   }).then(response => {
     console.log("code response = ", response)
      return response.json()
@@ -40,7 +43,7 @@ router.post('/getToken', (req, res) => {
     let obj = JSON.parse(process.env.TOKEN_OBJ)
     if(obj.hasOwnProperty('error')) {
       console.log("JSON.parse(process.env.TOKEN_OBJ).hasOwnProperty('error')",JSON.parse(process.env.TOKEN_OBJ).hasOwnProperty('error'))
-      return res.sendStatus(401)  //Need to comment out for prod
+     return res.sendStatus(401)  //Need to comment out for prod
    }
     res.sendStatus(200)
   }).catch((error) => {
@@ -65,19 +68,21 @@ router.get('/fetchItems/searchTxt/:searchTxt', (req, res, next) => {
 //res.send(json) //for dev environment
   //-------------------------------------------------------------------------------------------------------------------------------------
    console.log('req = https://api.sandbox.ebay.com/buy/browse/v1/item_summary/search?q=' + req.params.searchTxt + '&limit=100')
+   //https://api.ebay.com/buy/browse/v1/item_summary/search?q=drone&limit=3 prod
+   //https://api.sandbox.ebay.com/buy/browse/v1/item_summary/search?q=' + req.params.searchTxt + '&limit=100 sandbox
   //console.log('fetch Items process.env.TOKEN_OBJ = ' , process.env.TOKEN_OBJ)
   //console.log('fetch Items process.env.TOKEN_OBJ.access_token = ' , JSON.parse(process.env.TOKEN_OBJ).access_token)
-  fetch('https://api.sandbox.ebay.com/buy/browse/v1/item_summary/search?q=' + req.params.searchTxt + '&limit=100', {
+  fetch('https://api.ebay.com/buy/browse/v1/item_summary/search?q=' + req.params.searchTxt + '&limit=100', {
     headers: {
-      'Authorization': 'Bearer ' + JSON.parse(process.env.TOKEN_OBJ).access_token,
+      'Authorization': 'Bearer ' +  JSON.parse(process.env.TOKEN_OBJ).access_token,
       'Content-Type': 'application/json',
       'X-EBAY-C-MARKETPLACE-ID': 'EBAY_US',
       'X-EBAY-C-ENDUSERCTX': 'affiliateCampaignId=<ePNCampaignId>,affiliateReferenceId=<referenceId>'
     }
   }
   ).then(response => {
-    //console.log("res headers"+JSON.stringify(response.headers))
-    //console.log("req headers"+JSON.stringify(req.headers))
+    console.log("res headers"+JSON.stringify(response.headers))
+    console.log("req headers"+JSON.stringify(req.headers))
     return response.json()// {total:0} //
 
   }).then(data => {

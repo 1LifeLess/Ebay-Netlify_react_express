@@ -9,6 +9,7 @@ import Pagination from './components/pagination';
 import Sort from './components/sort';
 import ItemsPerPage from './components/itemsPerPage';
 
+
 import {
   BrowserRouter as Router,
   Switch,
@@ -35,15 +36,24 @@ class App extends Component {
     itemsPerPage: 10,
     currentPage: 1,
     authError:false,
+    modalDisplay: false,
+    countLoadedImages:0,
+    hideBadImages:false,
+    numOfRenderedItems:0,
+    badImg : [],
     error: ''
 
 
     //   itemId,price,seller,shippingOptions,additionalImages,image,title
 
   }
+  static badImg = []
   shouldComponentUpdate(nextProps, nextState) {
     // console.log("nextState.error = ",nextState)
-    return !(this.state.loading == true && nextState.loading == true)
+    return  !(this.state.loading == true && nextState.loading == true)&&
+            !(this.state.badImg.length<nextState.badImg.length)&&
+            !(this.state.countLoadedImages<nextState.countLoadedImages)//populating bad images array
+            //follow how many images has been loaded so far
   }
 
   fetchItems = (...args) => {
@@ -104,7 +114,7 @@ class App extends Component {
     // }).then(res=>res.json()).then(data=>{
     //   console.log("TEST CALL______ = ",data)
     // })
-    console.log("app.js mounted")
+    console.log(" did mount bad image = ",this.state.badImg)
 
   }
   changeText = (text) => {
@@ -135,18 +145,52 @@ class App extends Component {
     })
   }
 
+getImageDimentions=(e)=>{
+   const totalItems = e.target.getAttribute('itemsInPage')
+  const id = e.target.getAttribute('id')
+  //console.log(" bagImage = " , this.state.badImg)
+    if(e.target.naturalWidth==80)
+    this.setState(
+      {badImg:[...this.state.badImg,id]}
+      ,()=>this.checkIfRenderRequired(totalItems))
+    // console.log(" bagImage = " , this.state.badImg)
+    // console.log("id " ,id, "bad = ",e.target.naturalWidth==80)
+}
 
+checkIfRenderRequired=(totalItems)=>{
+  console.log("RenderReqired? called")
+  console.log("State callback = ", this.state)
+  const imgArr= document.getElementsByClassName("itemsImg")
+  if(imgArr.length==parseInt(totalItems)&&this.state.hideBadImages)
+      this.setState({hideBadImages:'ture'})
+}
 
   createItemList = () => { //create an array of components only for the current page,
+
     let high = parseInt(this.state.currentPage * this.state.itemsPerPage)
     let perPage = parseInt(this.state.itemsPerPage)
+    //let itemsInPage = this.state.items.slice(high - perPage, high)
     //  console.log(high - perPage, high)
-    return this.state.items.slice(high - perPage, high)
-      .map(item => <GetItem key={item.key} item={item} cartAddRemoveItem={this.cartAddRemoveItem} />)
+    let items= this.state.items
+           .filter(item=>this.state.hideBadImages?this.state.badImg.indexOf(item.itemId)==-1:item) //filter out broken images based on state-checkbox
+           .slice(high - perPage, high) //extract from all the API items only the Items that will display on page
+           .map((item,index,arr) => {    // create an array comp of the items
+           // console.log("map items.length = ",arr.length)
+                              return  <GetItem key={item.key} 
+                              itemsInPage={arr.length}
+                              item={item} cartAddRemoveItem={this.cartAddRemoveItem} 
+                              changeModalDisplay={this.changeModalDisplay}
+                              modalDisplay={this.state.modalDisplay}
+                              getImageDimentions={this.getImageDimentions}
+                                                          />})
+                                                         // this.setState({numOfRenderedItems:items.length})
+    return items
   }
+
   changeCurrentPage = (page) => {
     // console.log("Page: ", page)
-    this.setState({ currentPage: page })
+    
+    this.setState({ currentPage: page})
   }
 
   changeSortOrder = (input) => {
@@ -192,8 +236,24 @@ class App extends Component {
   const cartItems = this.state.cartItems.map(item=>item.inCart=0) //because we preferred shallow copy
     this.setState({cartItems:[]})
   }
+
+changeModalDisplay=(bool)=>{
+  console.log("modal display called with the value of = ",bool)
+    this.setState({modalDisplay:bool})
+  }
+
+  checkboxHandlechange=(e)=>{
+    console.log("e.target.checked = ", e.target.checked)
+    this.setState({
+      hideBadImages:e.target.checked, 
+      //countLoadedImages:0,
+      badImg:e.target.checked?[...this.state.badImg]:[]
+    })
+  }
   render() {
+    
     console.log("APP rendered STATE= ", this.state)
+   // console.log(" bagImage = " , this.state.badImg)
     //console.log("APP - render :this.state.searchTxt = ", this.state.searchTxt)
     const { error, loading, items } = this.state;
     //const cartItems = this.state.items.filter(item => item.inCart > 0)
@@ -209,7 +269,8 @@ class App extends Component {
             {window.location.href.indexOf('code=') < 0 &&
               <Route path="/" exact={true} strict={true}
                 component={() => {
-                  window.location.href = 'https://auth.sandbox.ebay.com/oauth2/authorize?client_id=tomersha-store-SBX-8e64e9f22-0c82ed0b&response_type=code&redirect_uri=tomer_shani-tomersha-store--trsqvdhhl&scope=https://api.ebay.com/oauth/api_scope https://api.ebay.com/oauth/api_scope/buy.order.readonly https://api.ebay.com/oauth/api_scope/buy.guest.order https://api.ebay.com/oauth/api_scope/sell.marketing.readonly https://api.ebay.com/oauth/api_scope/sell.marketing https://api.ebay.com/oauth/api_scope/sell.inventory.readonly https://api.ebay.com/oauth/api_scope/sell.inventory https://api.ebay.com/oauth/api_scope/sell.account.readonly https://api.ebay.com/oauth/api_scope/sell.account https://api.ebay.com/oauth/api_scope/sell.fulfillment.readonly https://api.ebay.com/oauth/api_scope/sell.fulfillment https://api.ebay.com/oauth/api_scope/sell.analytics.readonly https://api.ebay.com/oauth/api_scope/sell.marketplace.insights.readonly https://api.ebay.com/oauth/api_scope/commerce.catalog.readonly https://api.ebay.com/oauth/api_scope/buy.shopping.cart https://api.ebay.com/oauth/api_scope/buy.offer.auction https://api.ebay.com/oauth/api_scope/commerce.identity.readonly https://api.ebay.com/oauth/api_scope/commerce.identity.email.readonly https://api.ebay.com/oauth/api_scope/commerce.identity.phone.readonly https://api.ebay.com/oauth/api_scope/commerce.identity.address.readonly https://api.ebay.com/oauth/api_scope/commerce.identity.name.readonly https://api.ebay.com/oauth/api_scope/commerce.identity.status.readonly https://api.ebay.com/oauth/api_scope/sell.finances https://api.ebay.com/oauth/api_scope/sell.item.draft https://api.ebay.com/oauth/api_scope/sell.payment.dispute https://api.ebay.com/oauth/api_scope/sell.item'
+                  // window.location.href = 'https://auth..sandbox.ebay.com/oauth2/authorize?client_id=tomersha-store-SBX-8e64e9f22-0c82ed0b&response_type=code&redirect_uri=tomer_shani-tomersha-store--trsqvdhhl&scope=https://api.ebay.com/oauth/api_scope https://api.ebay.com/oauth/api_scope/buy.order.readonly https://api.ebay.com/oauth/api_scope/buy.guest.order https://api.ebay.com/oauth/api_scope/sell.marketing.readonly https://api.ebay.com/oauth/api_scope/sell.marketing https://api.ebay.com/oauth/api_scope/sell.inventory.readonly https://api.ebay.com/oauth/api_scope/sell.inventory https://api.ebay.com/oauth/api_scope/sell.account.readonly https://api.ebay.com/oauth/api_scope/sell.account https://api.ebay.com/oauth/api_scope/sell.fulfillment.readonly https://api.ebay.com/oauth/api_scope/sell.fulfillment https://api.ebay.com/oauth/api_scope/sell.analytics.readonly https://api.ebay.com/oauth/api_scope/sell.marketplace.insights.readonly https://api.ebay.com/oauth/api_scope/commerce.catalog.readonly https://api.ebay.com/oauth/api_scope/buy.shopping.cart https://api.ebay.com/oauth/api_scope/buy.offer.auction https://api.ebay.com/oauth/api_scope/commerce.identity.readonly https://api.ebay.com/oauth/api_scope/commerce.identity.email.readonly https://api.ebay.com/oauth/api_scope/commerce.identity.phone.readonly https://api.ebay.com/oauth/api_scope/commerce.identity.address.readonly https://api.ebay.com/oauth/api_scope/commerce.identity.name.readonly https://api.ebay.com/oauth/api_scope/commerce.identity.status.readonly https://api.ebay.com/oauth/api_scope/sell.finances https://api.ebay.com/oauth/api_scope/sell.item.draft https://api.ebay.com/oauth/api_scope/sell.payment.dispute https://api.ebay.com/oauth/api_scope/sell.item'
+                  window.location.href = 'https://auth.ebay.com/oauth2/authorize?client_id=tomersha-store-PRD-273605ce9-ba8ef486&response_type=code&redirect_uri=tomer_shani-tomersha-store--efihmyvu&scope=https://api.ebay.com/oauth/api_scope https://api.ebay.com/oauth/api_scope/sell.marketing.readonly https://api.ebay.com/oauth/api_scope/sell.marketing https://api.ebay.com/oauth/api_scope/sell.inventory.readonly https://api.ebay.com/oauth/api_scope/sell.inventory https://api.ebay.com/oauth/api_scope/sell.account.readonly https://api.ebay.com/oauth/api_scope/sell.account https://api.ebay.com/oauth/api_scope/sell.fulfillment.readonly https://api.ebay.com/oauth/api_scope/sell.fulfillment https://api.ebay.com/oauth/api_scope/sell.analytics.readonly https://api.ebay.com/oauth/api_scope/sell.finances https://api.ebay.com/oauth/api_scope/sell.payment.dispute https://api.ebay.com/oauth/api_scope/commerce.identity.readonly'
                   return null
                 }} />}
           </Switch>
@@ -224,8 +285,8 @@ class App extends Component {
           <div style={{ display: 'inline-block' }}>
             <Sort changeSortOrder={this.changeSortOrder} />
             <ItemsPerPage updateItemsPerPage={this.updateItemsPerPage} itemsPerPage={this.state.itemsPerPage} />
-            <Pagination totalItems={this.state.items.length} itemsPerPage={this.state.itemsPerPage} currentPage={this.state.currentPage} changeCurrentPage={this.changeCurrentPage} />
-
+            <Pagination totalItems={this.state.hideBadImages?this.state.items.length-this.state.badImg.length:this.state.items.length} itemsPerPage={this.state.itemsPerPage} currentPage={this.state.currentPage} changeCurrentPage={this.changeCurrentPage} />
+            {/* <input style={{marginLeft:'30px'}} id="checkboxIMG" type="checkbox" onChange={this.checkboxHandlechange}/> Hide bad images (less results) */}
           </div>
           <div>
             <div style={{ justifyContent: 'center',display: this.state.error==='' ? 'none' : 'flex' }}>{this.state.error}
@@ -241,6 +302,7 @@ class App extends Component {
 
               </div>
             </div>
+          
           </div>
 
         </div>

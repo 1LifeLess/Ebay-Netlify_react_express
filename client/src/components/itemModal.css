@@ -1,0 +1,77 @@
+
+.thumbnail {
+border: 1px solid #ddd; /* Gray border */
+  border-radius: 4px;  /* Rounded border */
+  padding: 5px; /* Some padding */
+  width: 50px; /* Set a small width */
+  height:inherit;
+  display: inherit;
+  box-sizing: border-box;
+  
+}
+
+
+/* Add a hover effect (blue shadow) */
+img:hover {
+  box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+}
+
+.slideShow{
+  position: relative;
+  box-sizing: border-box;
+  width:480px;
+  height:130px;
+  display: flex;
+  overflow: hidden;
+  padding-top: 5px;
+padding-bottom: 5px;
+-ms-overflow-style: none;
+  white-space: nowrap;
+}
+.imgWrapper{
+  position: relative;
+  margin: 0 auto;
+}
+
+.mainImage img{
+ position: relative;
+ 
+}
+.modal{
+  position:fixed;
+  top:30%;
+  left:50%;
+  background-color:#FFF;
+  transform: translate(-50%,-50%);
+  z-index:1000;
+  
+}
+span{
+  font-weight: bold;
+}
+.dot{
+  border-radius: 50%;
+  height:10px;
+  width:10px;
+  display: inline-block;
+  background-color: #FFF;
+  border: solid 1px rgb(22, 12, 12);
+  bottom:50%;
+  padding:5px;
+  margin: 5px;
+
+}
+.swipeContainer{
+  display:'flex';
+  text-align:'center';
+  justify-content:'center';
+  margin: 0;
+  position: relative;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+.arrow{
+  padding:10px 20px 10px 20px;
+  cursor: pointer;
+}
