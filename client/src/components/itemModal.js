@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState} from 'react'
 import ReactDom from 'react-dom'
 import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
@@ -32,7 +32,17 @@ const SLIDSHOW_STYLE = {
 
 export default function ItemModal({ item, closeModal, modalDisplay }) {
   const { title, additionalImages, condition, itemLocation, price, seller } = item
-  console.log("item = ", item)
+  console.log("Item modal rendered")
+  console.log('additionalImages = ',additionalImages)
+  if(additionalImages==undefined){
+    console.log('IF statment additionalImages true')
+    additionalImages=[item.image.imageUrl]
+      } 
+      console.log('additionalImages AFTER = ',additionalImages)   
+  
+
+
+  console.log("Modal item = ", item)
   const [currentImg, setCurrentImg] = useState(0);
   const [left, setLeft] = useState(0)
   const[rightArrow,setRarrow]=useState(true)
