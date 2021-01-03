@@ -31,14 +31,14 @@ const SLIDSHOW_STYLE = {
 }
 
 export default function ItemModal({ item, closeModal, modalDisplay }) {
-  const { title, additionalImages, condition, itemLocation, price, seller } = item
+  const { title, condition, itemLocation, price, seller } = item
   console.log("Item modal rendered")
-  console.log('additionalImages = ',additionalImages)
-  if(additionalImages==undefined){
-    console.log('IF statment additionalImages true')
-    additionalImages=[item.image.imageUrl]
+  console.log('item.additionalImages = ',item.additionalImages)
+  if(item.additionalImages==undefined){
+    console.log('IF statment item.additionalImages true')
+    item.additionalImages=[{imageUrl:item.image.imageUrl}]
       } 
-      console.log('additionalImages AFTER = ',additionalImages)   
+      console.log('item.additionalImages AFTER = ',item.additionalImages)   
   
 
 
@@ -57,7 +57,7 @@ export default function ItemModal({ item, closeModal, modalDisplay }) {
   }
 
   //
-  const imgArr = additionalImages.map((imgItem, index) => {
+  const imgArr = item.additionalImages.map((imgItem, index) => {
     return (
       <img key={item.itemId + '_' + index} className="thumbnails" style={{ flex: '1', padding: '5px', width:'120px',height: '120px', boxSizing: 'border-box', borderRadius: '4%' }} src={imgItem.imageUrl} onClick={() => changeCurrImg(index)} />
     )
@@ -69,7 +69,7 @@ export default function ItemModal({ item, closeModal, modalDisplay }) {
 
   const slideAction = (direction) => {
     console.log('direction from btn = ' ,direction)
-   const total=additionalImages.length
+   const total=item.additionalImages.length
     const current = left/120
     console.log("total = ",total," current = ",current)
   if(direction<0&&total+(current+direction)<4){
@@ -92,7 +92,7 @@ export default function ItemModal({ item, closeModal, modalDisplay }) {
  
 
   }
-  const dots = additionalImages.map((item, index) => {
+  const dots = item.additionalImages.map((item, index) => {
     const tmp = index == currentImg ? { backgroundColor: '#34d5eb' } : {}
     return <div key={index} className="dot" style={tmp}></div>
   })
@@ -106,7 +106,7 @@ export default function ItemModal({ item, closeModal, modalDisplay }) {
 
         <Modal.Body>
           <div style={{ margin: '0 auto', position: 'relative', display: 'flex', alignContent: 'center', justifyContent: 'center' }}>
-            <img className='mainImage' src={additionalImages[currentImg].imageUrl} /></div>
+            <img className='mainImage' src={item.additionalImages[currentImg].imageUrl} /></div>
           <div className="slideShow"><div className="imgWrapper" style={{ left: ''+left+'px' }}>
 
             {imgArr}
@@ -118,7 +118,7 @@ export default function ItemModal({ item, closeModal, modalDisplay }) {
                 <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm3.5 7.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z" />
               </svg></div>
             {dots}
-            <div style={!rightArrow||left==additionalImages.length*-120?{display:'none'}:{}} className="arrow" onClick={()=>slideAction(-4)}>
+            <div style={item.additionalImages.length<=4||!rightArrow||left==item.additionalImages.length*-120?{display:'none'}:{}} className="arrow" onClick={()=>slideAction(-4)}>
               <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-arrow-right-circle-fill" viewBox="0 0 16 16">
                 <path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z" />
               </svg></div>
