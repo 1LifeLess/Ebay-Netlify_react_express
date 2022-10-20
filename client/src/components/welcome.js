@@ -26,9 +26,9 @@ export default function Welcome() {
   <Modal.Body>
     <p> This project use Ebay API service,<br />
     According to Ebay policy and for security reasons, you will have to login to Ebay, <br/>
-   Please copy the following credentials or use your own if you already have an Ebay account</p>
+   Please copy the following login or use your own if you already have an Ebay account</p>
    UserName: <span style={{fontWeight:'bold'}}>reactappebay@gmail.com</span><br />
- password:   <span style={{fontWeight:'bold'}}>A!2345678</span>
+ password:   <span style={{fontWeight:'bold'}}>A!234567</span>
 
   </Modal.Body>
 
